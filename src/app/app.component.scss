@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'os';
+  src: url('/assets/fonts/Oswald.ttf') format("truetype");
+  // font-weight: bold;
+}
+
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
 }
@@ -116,4 +122,9 @@ ion-note {
 
 ion-item.selected {
   --color: var(--ion-color-primary);
+}
+
+
+*{
+  font-family: 'os';
 }
