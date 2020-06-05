@@ -1,29 +1,26 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { DataServiceService } from '../../../shared/services/data-service.service';
+import { DataServiceService } from '../../../../shared/services/data-service.service';
 
 @Component({
-  selector: 'app-historial',
-  templateUrl: './historial.page.html',
-  styleUrls: ['./historial.page.scss'],
+  selector: 'app-car-list',
+  templateUrl: './car-list.page.html',
+  styleUrls: ['./car-list.page.scss'],
 })
-export class HistorialPage implements OnInit {
-  cars = [];
-  selectCar: any;
-  valueCar: any = {};
+export class CarListPage implements OnInit {
+  iconType: string;
+  typeVehicle: any;
+  cars: any;
 
-  constructor(private dataService: DataServiceService) { }
+  constructor(private dataService: DataServiceService, private router: Router) { }
 
   ngOnInit() {
-    this.getCars();
-  }
-
-  getCars(){
-    this.dataService.getCollection('vehiculos').subscribe((data:any) =>{
+     this.dataService.getCollection('vehiculos').subscribe((data:any) =>{
       // var source = data.metadata.fromCache ? "local cache" : "server";
       console.log("Data came from " , data);
        this.cars = data.map((e: any) => {
         let source = e.payload.doc.metadata.fromCache ? "local cache" : "server";
-         console.log(source, this.cars.length);
+         console.log(source);
          
         return {
           id: e.payload.doc.id,
@@ -33,16 +30,13 @@ export class HistorialPage implements OnInit {
      });
 
      console.log(this.cars);
-     this.selectCar = this.cars[0];
+    
+
+    
      });
     }
 
-    changeCar(car){
-  
-        console.log(car.target.value);
-        // this.selectCar;
 
-  }
   setIconType(tipo: string){
     let icon: string
     switch(tipo){
@@ -71,6 +65,12 @@ export class HistorialPage implements OnInit {
     return icon;
   }
 
-  
-}
+  detail(car){
+    console.log('detalle');
+    
+    this.router.navigate(['car/carForm'], {state: car});
 
+
+  }
+
+}

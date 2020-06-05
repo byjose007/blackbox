@@ -1,153 +1,124 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-back-button color="light" slot="start"></ion-back-button>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>Vehículo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="eliminar()" expand="block" fill="clear" shape="round">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+      <ion-button (click)="guardar()">
+        
+        <ion-icon name="save"></ion-icon>
+       
+      </ion-button>
+     
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
   <!-- List Inset Lines -->
-  <ion-list lines="full">
-    <ion-item>
-      <ion-col class="ion-text-center">
-      <p>RECETA # 25</p>
-      </ion-col>
-    </ion-item>
-
-    <ion-card color="tertiary">
-
-  
- <ion-card-content>
-  <ion-item color="tertiary">
-    <ion-label position="stacked">Nombre</ion-label>
-    <ion-input type="text" placeholder="Awesome Input"></ion-input>    
-  </ion-item>
-
-  <ion-item color="tertiary">
-    <ion-label position="stacked">Fixed Label</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
- </ion-card-content>
-      
-    </ion-card>
-
-    
-
-    <ion-item>
-      <ion-label>
-        <h2 class="title-item">descripcion</h2>
-      <p> direcc </p>
-      </ion-label>
-    </ion-item>
-    
-  
-
-    
-
+  <ion-list *ngIf="!loading" lines="full">
     <!-- <ion-item>
-      <ion-label (click)="callPhone(pedido.telefono)">
-        <h2 class="title-item">Teléfono</h2>
-        <p>0987380013
-           <ion-chip color="success"> 
-          <ion-icon name="call"></ion-icon>          
-          <ion-label>Llamar</ion-label>          
-        </ion-chip>   </p>
-        
-      </ion-label>
+      <ion-col class="ion-text-center">
+        <p>RECETA # 25</p>
+      </ion-col>
     </ion-item> -->
 
-    
+    <form [formGroup]="carForm">
 
 
-    <ion-item class="ion-text-left">
+      <ion-card color="tertiary">
+        <ion-card-content>
+          <ion-item color="tertiary">
+            <ion-label position="stacked">Tipo</ion-label>
+            <ion-select value="peperoni" formControlName="tipo" multiple="false" placeholder="Tipo de Vehículo">
+              <ion-select-option value="camion">Camión</ion-select-option>
+              <ion-select-option value="camioneta">Camioneta</ion-select-option>
+              <ion-select-option value="auto">Automovil</ion-select-option>
+              <ion-select-option value="moto">Moto</ion-select-option>
+              <ion-select-option value="bici">Bicicleta</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item color="tertiary">
+            <ion-label position="stacked">Nombre</ion-label>
+            <ion-input formControlName="nombre" type="text" placeholder="Nombre"></ion-input>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
 
+      <ion-card color="tertiary">
+        <ion-card-header>
+          <ion-card-title>Unidades</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item color="tertiary">
+            <ion-label position="stacked">Distancia</ion-label>
+            <ion-select value="peperoni" multiple="false" formControlName="unidadDistancia" placeholder="Distancia">
+              <ion-select-option value="kilometros">Kilómetros</ion-select-option>
+              <ion-select-option value="millas">Millas</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item color="tertiary">
+            <ion-label position="stacked">Combustible</ion-label>
+            <ion-select value="peperoni" multiple="false" formControlName="unidadCombustible" placeholder="Distancia">
+              <ion-select-option value="litros">Litros</ion-select-option>
+              <ion-select-option value="galones">Galones</ion-select-option>
+            </ion-select>
+          </ion-item>
 
-      <ion-col size="6"  class="ion-text-start">
-        <ion-label>     
-          <h2 class="title-item">Marca</h2>
-        <p>sefectº</p>
-        </ion-label>        
-      </ion-col>
+        </ion-card-content>
+      </ion-card>
 
-      <ion-col size="6"  class="ion-text-end">
-        <ion-label>     
-          <h2 class="title-item">Modelo</h2>
-          <p>2222</p>
-        </ion-label>        
-      </ion-col>  
-    </ion-item>
+      <ion-card color="tertiary">
+        <ion-card-header>
+          <ion-card-title>Combustible</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
 
-    
-    <ion-item class="ion-text-left">
-      <ion-col size="6"  class="ion-text-center_">
-        <ion-label>     
-          <h2 class="title-item">Fecha Matriculación</h2>
-        <p>sefectº</p>
-        </ion-label>        
-      </ion-col>
+          <ion-item color="tertiary">
+            <ion-label position="stacked">Tipo Combustible</ion-label> <br>
+            <ion-select value="peperoni" formControlName="tipoCombustible" multiple="false"
+              placeholder="Tipo de Vehículo">
+              <ion-select-option value="gasolinaSuper">Gasolina Super</ion-select-option>
+              <ion-select-option value="gasolinaExtra">Gasolina Extra</ion-select-option>
+              <ion-select-option value="diesel">Diesel</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-card-content>
 
-      <ion-col size="6"  class="ion-text-end">
-        <ion-label>     
-          <h2 class="title-item">Fecha Seguro</h2>
-          <p>2222</p>
-        </ion-label>        
-      </ion-col>  
-    </ion-item>
+      </ion-card>
 
-    <ion-item class="ion-text-left">
-      <ion-col size="6"  class="ion-text-center_">
-        <ion-label>     
-          <h2 class="title-item">Matricula</h2>
-        <p>sefectº</p>
-        </ion-label>        
-      </ion-col>
+      <ion-card color="tertiary">
+        <ion-card-header>
+          <ion-card-title>Infomración Opcional</ion-card-title>
+        </ion-card-header>
 
-      <ion-col size="6"  class="ion-text-end">
-        <ion-label>     
-          <h2 class="title-item">color</h2>
-          <p>2222</p>
-        </ion-label>        
-      </ion-col>  
-    </ion-item>
+        <ion-card-content>
+          <ion-item color="tertiary">
+            <ion-label position="stacked">Marca</ion-label>
+            <ion-input formControlName="marca" type="text" placeholder="Marca"></ion-input>
 
-   
-
-
-    <ion-item class="ion-text-left">
-      <ion-col size="4">
-        <ion-label>     
-          <h2 class="title-item">Unidad de Distancia</h2>
-          <p>$ 121</p>
-        </ion-label>        
-      </ion-col>
-
-      <ion-col size="4"  class="ion-text-center">
-        <ion-label>     
-          <h2 class="title-item">Unidad de Combustible</h2>
-        <p>$  number: '1.2-2'</p>
-        </ion-label>        
-      </ion-col>
-
-      <ion-col size="4"  class="ion-text-end">
-        <ion-label>     
-          <h2 class="title-item">Tipo Combustible</h2>
-          <p>$  number: '1.2-2' </p>
-        </ion-label>        
-      </ion-col>  
-    </ion-item>
+          </ion-item>
+          <ion-item color="tertiary">
+            <ion-label position="stacked">Modelo</ion-label>
+            <ion-input formControlName="modelo" type="text" placeholder="Modelo"></ion-input>
+          </ion-item>
+          <ion-item color="tertiary">
+            <ion-label position="stacked">Año</ion-label>
+            <ion-input formControlName="año" type="text" placeholder="Modelo"></ion-input>
+          </ion-item>
+          <ion-item color="tertiary">
+            <ion-label position="stacked">Matrícula</ion-label>
+            <ion-input formControlName="matricula" type="text" placeholder="Modelo"></ion-input>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </form>
+ 
   </ion-list>
-
-
-  <!-- Botones -->
-  <section>
-
-  <ion-button  expand="block" shape="round" (click)="verUbicacion()">AÑADIR VEHÍCULO</ion-button>
-  <!-- <ion-button *ngIf="pedido?.estadoDespacho === 'preparado'"  
-  expand="block" shape="round" 
-  (click)="presentAlertAcept()">ACEPTAR PEDIDO</ion-button> -->
-
-<ion-button *ngIf="pedido?.estadoDespacho === 'camino'"  
-  expand="block" shape="round" 
-  (click)="gotoEntrega()">Añadir vehiculo</ion-button>
-  </section>
+  <ion-progress-bar *ngIf="loading" color="primary" type="indeterminate"></ion-progress-bar>
+ 
 </ion-content>
-

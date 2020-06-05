@@ -2,10 +2,15 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
+  },
+  {
+    path: 'app',
+    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'folder/:id',
@@ -27,9 +32,10 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   },
+ 
   {
     path: 'car',
-    loadChildren: () => import('./pages/car/car.module').then( m => m.CarPageModule)
+    loadChildren: () => import('./pages/car/car-list/car-list.module').then( m => m.CarListPageModule)
   },
   {
     path: 'reminder',

@@ -1,9 +1,39 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="salir()" expand="block" fill="clear" shape="round"> Salir 
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="light">
+  <form [formGroup]="userForm">
+    <ion-card> 
+
+
+      <ion-card-content>
+        <ion-item color="tertiary">
+          <ion-label position="stacked">Nombres</ion-label>
+          <ion-input formControlName="nombres" type="text" placeholder="Nombres"></ion-input>
+
+        </ion-item>
+        <ion-item color="tertiary">
+          <ion-label position="stacked">Apellidos</ion-label>
+          <ion-input formControlName="apellidos" type="text" placeholder="Apellidos"></ion-input>
+        </ion-item>
+        <ion-item color="tertiary">
+          <ion-label position="stacked">email</ion-label>
+          <ion-input formControlName="email" type="text" placeholder="Email"></ion-input>
+        </ion-item>
+    
+      </ion-card-content>
+    </ion-card>
+  </form>
 
 </ion-content>

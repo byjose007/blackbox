@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DataServiceService } from '../../../shared/services/data-service.service';
+import { Car } from './car.model';
 
 @Component({
   selector: 'app-car',
@@ -8,80 +11,81 @@ import { AlertController, ModalController } from '@ionic/angular';
   styleUrls: ['./car.page.scss'],
 })
 export class CarPage implements OnInit {
-  pedido: any;
+  carForm: FormGroup;
+  msg: string;
+  car: any = {};
+  loading = false;
 
-  costoEnvio = 1.50;
-  // pedido: any;
-  acepted = false;
-  transportista: any;
+
 
   constructor(private router: Router,
-              // private callNumber: any,
-              // private toastService: ToastService,
-              public alertController: AlertController,
-              public modalController: ModalController,
-              // private genericService: GenericService,
-              // public socketService: SocketService
-              ) { }
+    private fb: FormBuilder,
+    private dataService: DataServiceService,
+    private toast: ToastController,
+  ) {
+    this.car = this.router.getCurrentNavigation().extras.state;
+    
+
+   }
 
 
   ngOnInit() {
-
-    this.pedido = this.router.getCurrentNavigation().extras.state;
-    console.log(this.pedido, 'pedido en detalle');
-    this.transportista = JSON.parse(localStorage.getItem('user'));
-
+    this.initForm();
   }
 
 
-  callPhone(phone) {
+  initForm(){
+    this.carForm = this.fb.group({      
+      nombre: [this.car?.nombre || '', Validators.required],
+      tipo: [this.car?.tipo || 'camion', Validators.required],
+      unidadDistancia: [this.car?.unidadDistancia || 'kilometros', Validators.required],
+      unidadCombustible: [this.car?.unidadCombustible || 'litros', Validators.required],
+      tipoCombustible: [this.car?.tipoCombustible || 'diesel', Validators.required],
+      marca: this.car?.marca || null,
+      modelo: this.car?.modelo || null,
+      año: this.car?.año || null,
+      matricula: this.car?.matricula || null
+
+    })
+  }
+
+
+  guardar() {
+    this.loading = true;
+    console.log(this.carForm.value);
+    if(this.car){
+      this.dataService.updateDoc('vehiculos/',this.car.id, this.carForm.value).then(
+        ()=>{
+          this.loading = false;
+          this.dataService.presentToast('Se ha guardado correctamente!')
+          this.router.navigate(['car']);
+
+        } 
+        )
+
+    }else{
+      this.dataService.createCollection('vehiculos', this.carForm.value).then(data => {
+        this.loading = false;
+        this.dataService.presentToast('Se ha guardado correctamente!')
+        this.router.navigate(['car']);
+
+  
+      }, error => console.log(error));
+
+    }
    
   }
 
-  verUbicacion() {
-    this.router.navigate(['ubicacion'], { state: this.pedido });
-
+  eliminar(){
+    
   }
 
-  gotoEntrega() {
-    this.router.navigate(['signature'], { state: this.pedido });
-  }
+  
 
 
-  // async aceptarPedido() {
-  //   const modal = await this.modalController.create({
-  //     component: ModalTiempoPage
-  //   });
 
-  //   modal.onDidDismiss()
-  //     .then((dataDismiss: any) => {
-  //       if (dataDismiss.data.tiempo) {
-  //         console.log('DISMISS');
 
-  //         this.updateDespacho(dataDismiss.data.tiempo);
-  //       }
-  //     });
 
-  //   return await modal.present();
-  // }
-
-  updateDespacho(tiempo) {
-
-    const data = {
-      id: this.pedido._id,
-      estadoDespacho: 'preparadoTrans',
-      idTransportista: this.transportista._id,
-      tiempoEstimado: tiempo
-    }
-
-    // this.genericService.updateDespacho(data).subscribe(data => {
-
-    //   console.log(data, 'DESPACHO ACTUALIZADO');
-    //   this.socketService.senDataDispatch(data);
-    //   this.router.navigate(['home']);
-
-    // });
-  }
 }
 
 

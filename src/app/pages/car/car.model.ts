@@ -1,15 +1,12 @@
 export class Car {
-    nombre: string;
-    descripcion: string;
-    marca: string;
+    nombre: string
+    tipo: string
+    unidadDistancia: string
+    unidadCombustible: string
+    tipoCombustible: string
+    marca: string
     modelo: string
-    fechaMatricula: string;
-    fechaSeguro: string;
-    color: string;
-    matricula: string;
-    unidadDistancia: string;
-    unidadCombustible: string;
-    consumo: string;
-    tipoCombustible: string; 
+    año: string
+    matricula: string
 
 }

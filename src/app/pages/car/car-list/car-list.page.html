@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Mis vehículos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+    <ion-card *ngFor="let car of cars" class="card-item">
+      <ion-item detail color="tertiary" (click)="detail(car)">
+        <ion-label>
+          <h2>{{car.nombre}}</h2>
+        <p>{{car.marca}}</p>
+        </ion-label>
+        <ion-icon [src]="setIconType(car.tipo)"  size="large" slot="start" color="primary"></ion-icon>
+      </ion-item>
+    </ion-card>
+
+    <ion-fab routerLink="carForm" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+</ion-content>
